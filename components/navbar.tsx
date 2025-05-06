@@ -3,6 +3,7 @@
 import type {NavbarProps} from "@heroui/react";
 import Logo from "./svg/logo";
 import React from "react";
+import { MdKeyboardArrowRight } from "react-icons/md";
 import {
   Navbar,
   NavbarBrand,
@@ -20,14 +21,13 @@ import {
 //import {AcmeIcon} from "./social";
 
 const menuItems = [
-  "About",
-  "Blog",
-  "Customers",
-  "Pricing",
-  "Enterprise",
-  "Changelog",
-  "Documentation",
-  "Contact Us",
+  "Over Ons",
+  "Topdeals",
+  "Categorieën",
+  "Populair",
+  "Nieuwe Deals",
+  "Zoeken",
+  "Contact",
 ];
 
 const BasicNavbar = React.forwardRef<HTMLElement, NavbarProps>(
@@ -55,7 +55,7 @@ const BasicNavbar = React.forwardRef<HTMLElement, NavbarProps>(
           <div className="rounded-full bg-default-foreground text-background">
             <Logo/>
           </div>
-          <span className="ml-2 text-small font-medium text-default-foreground">ACME</span>
+          <span className="ml-2 text-small font-medium text-default-foreground">Doldeals</span>
         </NavbarBrand>
 
         {/* Center Content */}
@@ -67,22 +67,22 @@ const BasicNavbar = React.forwardRef<HTMLElement, NavbarProps>(
           </NavbarItem>
           <NavbarItem>
             <Link className="text-default-500" href="#" size="sm">
-              Features
+            Topdeals
             </Link>
           </NavbarItem>
           <NavbarItem>
             <Link className="text-default-500" href="#" size="sm">
-              Customers
+            Categorieën
             </Link>
           </NavbarItem>
           <NavbarItem>
             <Link className="text-default-500" href="#" size="sm">
-              About Us
+            Over Ons
             </Link>
           </NavbarItem>
           <NavbarItem>
             <Link className="text-default-500" href="#" size="sm">
-              Integrations
+            Populair
             </Link>
           </NavbarItem>
         </NavbarContent>
@@ -91,16 +91,16 @@ const BasicNavbar = React.forwardRef<HTMLElement, NavbarProps>(
         <NavbarContent className="hidden md:flex" justify="end">
           <NavbarItem className="ml-2 !flex gap-2">
             <Button className="text-default-500" radius="full" variant="light">
-              Login
+              inloggen
             </Button>
             <Button
               className="bg-default-foreground font-medium text-background"
               color="secondary"
-              
+              endContent={<MdKeyboardArrowRight size={20}/>}
               radius="full"
               variant="flat"
             >
-              Get Started
+              Bekijken
             </Button>
           </NavbarItem>
         </NavbarContent>

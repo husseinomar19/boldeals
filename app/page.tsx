@@ -5,6 +5,8 @@ import BasicNavbar from "@/components/navbar";
 import FasdeInImage from "@/components/background/motion";
 //import {Icon} from "@iconify/react";
 
+import { IoIosArrowRoundForward } from "react-icons/io";
+
 export default function Home() {
   return (
     <div className="relative flex h-dvh w-full flex-col overflow-hidden bg-background">
@@ -13,7 +15,7 @@ export default function Home() {
         <section className="z-20 flex flex-col items-center justify-center gap-[18px] sm:gap-6">
           <Button
             className="h-9 overflow-hidden border-1 border-default-100 bg-default-50 px-[18px] py-2 text-small font-normal leading-5 text-default-500"
-            //add icon
+            endContent={<IoIosArrowRoundForward size={22}/>}
             radius="full"
             variant="bordered"
           >
@@ -38,7 +40,7 @@ export default function Home() {
           </p>
           <div className="flex flex-col items-center justify-center gap-6 sm:flex-row">
             <Button
-              className="h-10 w-[163px] bg-default-foreground px-[16px] py-[10px] text-small font-medium leading-5 text-background"
+              className="h-10 w-[183px] bg-default-foreground px-[20px] py-[10px] text-small font-medium leading-5 text-background"
               radius="full"
             >
               Bekijk Populaire Deals
@@ -47,7 +49,7 @@ export default function Home() {
               className="h-10 w-[163px] border-1 border-default-100 px-[16px] py-[10px] text-small font-medium leading-5"
               endContent={
                 <span className="pointer-events-none flex h-[22px] w-[22px] items-center justify-center rounded-full bg-default-100">
-                  {/**add icon */}
+                  <IoIosArrowRoundForward size={21}/>
                 </span>
               }
               radius="full"
