@@ -1,214 +1,148 @@
-"use client"
- 
-import * as React from "react"
-import Link from "next/link"
-import { cn } from "@/lib/utils"
+"use client";
+
+import type {NavbarProps} from "@heroui/react";
+import Logo from "./svg/logo";
+import React from "react";
 import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu"
-import {
-  Navbar as HeroUINavbar,
-  NavbarContent,
-  NavbarMenu,
-  NavbarMenuToggle,
+  Navbar,
   NavbarBrand,
+  NavbarContent,
   NavbarItem,
-} from "@heroui/navbar";
-import { Input } from "@heroui/input";
-import NextLink from "next/link";
-import { ThemeSwitch } from "@/components/theme-switch";
-import {
-  SearchIcon,
-  Logo,
-} from "@/components/icons";
+  NavbarMenu,
+  NavbarMenuItem,
+  NavbarMenuToggle,
+  Link,
+  Button,
+  Divider,
+  cn,
+} from "@heroui/react";
 
-const components: { title: string; href: string; description: string }[] = [
-  {
-    title: "Alert Dialog",
-    href: "/docs/primitives/alert-dialog",
-    description:
-      "A modal dialog that interrupts the user with important content and expects a response.",
-  },
-  {
-    title: "Hover Card",
-    href: "/docs/primitives/hover-card",
-    description:
-      "For sighted users to preview content available behind a link.",
-  },
-  {
-    title: "Progress",
-    href: "/docs/primitives/progress",
-    description:
-      "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
-  },
-  {
-    title: "Scroll-area",
-    href: "/docs/primitives/scroll-area",
-    description: "Visually or semantically separates content.",
-  },
-  {
-    title: "Tabs",
-    href: "/docs/primitives/tabs",
-    description:
-      "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
-  },
-  {
-    title: "Tooltip",
-    href: "/docs/primitives/tooltip",
-    description:
-      "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
-  },
-]
+//import {AcmeIcon} from "./social";
 
-export const Navbar = () => {
-  const searchInput = (
-    <Input
-      aria-label="Search"
-      classNames={{
-        inputWrapper: "bg-default-100",
-        input: "text-sm",
-      }}
-      
-      labelPlacement="outside"
-      placeholder="Search..."
-      startContent={
-        <SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0" />
-      }
-      type="search"
-    />
-  );
+const menuItems = [
+  "About",
+  "Blog",
+  "Customers",
+  "Pricing",
+  "Enterprise",
+  "Changelog",
+  "Documentation",
+  "Contact Us",
+];
 
-  const ListItem = React.forwardRef<
-  React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
->(({ className, title, children, ...props }, ref) => {
-  return (
-    <li>
-      <NavigationMenuLink asChild>
-        <a
-          ref={ref}
-          className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className
-          )}
-          {...props}
-        >
-          <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-            {children}
-          </p>
-        </a>
-      </NavigationMenuLink>
-    </li>
-  )
-})
-ListItem.displayName = "ListItem"
+const BasicNavbar = React.forwardRef<HTMLElement, NavbarProps>(
+  ({classNames = {}, ...props}, ref) => {
+    const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-  return (
-    <HeroUINavbar maxWidth="xl" position="sticky">
-      <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
-        <NavbarBrand as="li" className="gap-3 max-w-fit">
-
-          <NextLink className="flex justify-start items-center gap-1" href="/">
-            <Logo />
-            <p className="font-bold text-inherit">BolDeals</p>
-          </NextLink>
-
+    return (
+      <Navbar
+        ref={ref}
+        {...props}
+        classNames={{
+          base: cn("border-default-100 bg-transparent", {
+            "bg-default-200/50 dark:bg-default-100/50": isMenuOpen,
+          }),
+          wrapper: "w-full justify-center",
+          item: "hidden md:flex",
+          ...classNames,
+        }}
+        height="60px"
+        isMenuOpen={isMenuOpen}
+        onMenuOpenChange={setIsMenuOpen}
+      >
+        {/* Left Content */}
+        <NavbarBrand>
+          <div className="rounded-full bg-default-foreground text-background">
+            <Logo/>
+          </div>
+          <span className="ml-2 text-small font-medium text-default-foreground">ACME</span>
         </NavbarBrand>
 
-        <NavigationMenu>
-      <NavigationMenuList>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>Getting started</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-              <li className="row-span-3">
-                <NavigationMenuLink asChild>
-                  <a
-                    className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                    href="/"
-                  >
-                     <Logo />
-                    <div className="mb-2 mt-4 text-lg font-medium">
-                      bolDeals
-                    </div>
-                    <p className="text-sm leading-tight text-muted-foreground">
-                      Beautifully designed components built with Radix UI and
-                      Tailwind CSS.
-                    </p>
-                  </a>
-                </NavigationMenuLink>
-              </li>
-              <ListItem href="/docs" title="Introduction">
-                Re-usable components built using Radix UI and Tailwind CSS.
-              </ListItem>
-              <ListItem href="/docs/installation" title="Installation">
-                How to install dependencies and structure your app.
-              </ListItem>
-              <ListItem href="/docs/primitives/typography" title="Typography">
-                Styles for headings, paragraphs, lists...etc
-              </ListItem>
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>Components</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-              {components.map((component) => (
-                <ListItem
-                  key={component.title}
-                  title={component.title}
-                  href={component.href}
-                >
-                  {component.description}
-                </ListItem>
-              ))}
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <Link href="/docs" legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Documentation
-            </NavigationMenuLink>
-          </Link>
-        </NavigationMenuItem>
-      </NavigationMenuList>
-    </NavigationMenu>
+        {/* Center Content */}
+        <NavbarContent justify="center">
+          <NavbarItem isActive className="data-[active='true']:font-medium[date-active='true']">
+            <Link aria-current="page" className="text-default-foreground" href="#" size="sm">
+              Home
+            </Link>
+          </NavbarItem>
+          <NavbarItem>
+            <Link className="text-default-500" href="#" size="sm">
+              Features
+            </Link>
+          </NavbarItem>
+          <NavbarItem>
+            <Link className="text-default-500" href="#" size="sm">
+              Customers
+            </Link>
+          </NavbarItem>
+          <NavbarItem>
+            <Link className="text-default-500" href="#" size="sm">
+              About Us
+            </Link>
+          </NavbarItem>
+          <NavbarItem>
+            <Link className="text-default-500" href="#" size="sm">
+              Integrations
+            </Link>
+          </NavbarItem>
+        </NavbarContent>
 
+        {/* Right Content */}
+        <NavbarContent className="hidden md:flex" justify="end">
+          <NavbarItem className="ml-2 !flex gap-2">
+            <Button className="text-default-500" radius="full" variant="light">
+              Login
+            </Button>
+            <Button
+              className="bg-default-foreground font-medium text-background"
+              color="secondary"
+              
+              radius="full"
+              variant="flat"
+            >
+              Get Started
+            </Button>
+          </NavbarItem>
+        </NavbarContent>
 
+        <NavbarMenuToggle className="text-default-400 md:hidden" />
 
-      </NavbarContent>
+        <NavbarMenu
+          className="top-[calc(var(--navbar-height)_-_1px)] max-h-fit bg-default-200/50 pb-6 pt-6 shadow-medium backdrop-blur-md backdrop-saturate-150 dark:bg-default-100/50"
+          motionProps={{
+            initial: {opacity: 0, y: -20},
+            animate: {opacity: 1, y: 0},
+            exit: {opacity: 0, y: -20},
+            transition: {
+              ease: "easeInOut",
+              duration: 0.2,
+            },
+          }}
+        >
+          <NavbarMenuItem>
+            <Button fullWidth as={Link} href="/#" variant="faded">
+              Sign In
+            </Button>
+          </NavbarMenuItem>
+          <NavbarMenuItem className="mb-4">
+            <Button fullWidth as={Link} className="bg-foreground text-background" href="/#">
+              Get Started
+            </Button>
+          </NavbarMenuItem>
+          {menuItems.map((item, index) => (
+            <NavbarMenuItem key={`${item}-${index}`}>
+              <Link className="mb-2 w-full text-default-500" href="#" size="md">
+                {item}
+              </Link>
+              {index < menuItems.length - 1 && <Divider className="opacity-50" />}
+            </NavbarMenuItem>
+          ))}
+        </NavbarMenu>
+      </Navbar>
+    );
+  },
+);
 
-      <NavbarContent
-        className="hidden sm:flex basis-1/5 sm:basis-full"
-        justify="end"
-      >
-        <NavbarItem className="hidden sm:flex gap-2">
-        <ThemeSwitch />
+BasicNavbar.displayName = "BasicNavbar";
 
-      </NavbarItem>
-        <NavbarItem className="hidden lg:flex md:flex">{searchInput}</NavbarItem>
-        <NavbarItem className="hidden md:flex">
-        </NavbarItem>
-      </NavbarContent>
-
-      <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
-        <ThemeSwitch />
-        <NavbarMenuToggle />
-      </NavbarContent>
-
-      <NavbarMenu>
-        {searchInput}
-      </NavbarMenu>
-
-    </HeroUINavbar>
-  );
-};
+export default BasicNavbar;
